@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+
+$light: 300;
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+
+
+h1 {
+    font-family: "Jost", "sans-serif";
+    font-weight: $semi-bold;
+}
+
+.bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px
+}
+
+.center-div {
+    padding: 32px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-btn {
+    padding: 8px 16px 8px 16px;
+    font-family: "Jost", "sans-serif";
+    background-color: maroon;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-btn:hover {
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.254);
+}
