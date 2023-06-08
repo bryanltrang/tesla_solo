@@ -8,7 +8,7 @@ const Dashboard = ({ info }) => {
   const [tireMessage, setTireMessage] = useState(
     "Doesn't look like you've changed your tires yet..."
   );
-  const { distance, make, model, range, year, percentRemaining } = info;
+  const { distance, make, model, range, year, percentRemaining, id } = info;
   const { requestId } = info.meta;
   const factor = 0.621371;
   const miles = distance * factor;
@@ -40,6 +40,13 @@ const Dashboard = ({ info }) => {
   //     });
   // };
 
+  // handle on click
+  // post to db passing in vin into body
+  // console log response
+  const handleAddRotation = () => {
+    console.log('Added tire rotation');
+  };
+
   return (
     <div className="wrapper-div">
       <div className="left-div">
@@ -68,7 +75,9 @@ const Dashboard = ({ info }) => {
           <button onClick={handleUnlock}>Unlock</button>
           {lockMessage}
         </div> */}
-        <button className="btn">I changed my tires</button>
+        <button className="btn" onClick={handleAddRotation}>
+          I changed my tires
+        </button>
         <p className="sub-title">{tireMessage}</p>
       </div>
       {/* Make this into a component */}

@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const smartcar = require('smartcar');
+const apiRouter = require('./routes/api.js');
 
 // set the server port
 const PORT = 3000;
@@ -81,26 +82,9 @@ app.get('/vehicle', async (req, res) => {
   }
 });
 
-app.post('/lock', async (req, res) => {
-  try {
-    const { action } = req.body;
-    console.log(req.body);
-    if (!action) res.sendStatus(400);
-    const { accessToken } = req.cookies.accessCode;
-    const { vehicles } = await smartcar.getVehicles(accessToken);
-    const vehicle = new smartcar.Vehicle(vehicles[0], accessToken);
+//API ROUTER
 
-    if (action === 'LOCK') vehicle.lock();
-    if (action === 'UNLOCK') vehicle.unlock();
-    res.sendStatus(200);
-  } catch (err) {
-    res.sendStatus(400);
-    // return next({
-    //   log: 'Issue found in POST /lock endpoint',
-    //   message: { err: 'error in POST /lock endpoint' },
-    // });
-  }
-});
+app.use('/api', apiRouter);
 
 // need 404 reroute page here!!
 

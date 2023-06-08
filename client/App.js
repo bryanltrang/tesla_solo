@@ -4,6 +4,8 @@ import Login from './Login';
 import Smartcar from '@smartcar/auth';
 import styles from './styles.scss';
 
+// IF 404 ERROR FROM TRYING TO FETCH. CLEAR COOKIES. NOT HANDLING REFRESH CORRECTLY I THINK
+
 const App = () => {
   const [vehicle, setVehicle] = useState({});
 
