@@ -21,22 +21,15 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
+// DO NOT REMOVE
 const client = new smartcar.AuthClient({
+  mode: 'test',
   clientId: 'ffcdfc20-0a5f-47a4-b051-7c52543cc333',
   clientSecret: 'e1dbe7c4-8345-4006-ad46-34595869f5a2',
-  redirectUri: 'http://localhost:8080/exchange',
-  mode: 'test',
+  scope: ['read_vehicle_info', 'read_odometer', 'read_battery'],
+  redirectUri:
+    'https://javascript-sdk.smartcar.com/v2/redirect?app_origin=http://localhost:8080',
 });
-
-// when user hits a login endpoint redirect to smartcar auth url
-app.use('/login', (req, res) => {
-  const scope = ['read_vehicle_info'];
-  const authUrl = client.getAuthUrl(scope);
-
-  return res.redirect(authUrl);
-});
-
-// GET AUTH CODE
 
 // used to store the code
 let access;
@@ -46,10 +39,13 @@ app.get('/exchange', async (req, res) => {
   try {
     // get code and access code
     const { code } = req.query;
+    console.log('code', code);
     access = await client.exchangeCode(code);
+    console.log('access', access);
     // set cookie here
     res.cookie('accessCode', access);
-    return res.redirect('/dashboard');
+    // old code would redirect here to /vehicle
+    return res.sendStatus(200);
   } catch {
     res.sendStatus(400);
     // return next({
@@ -61,8 +57,9 @@ app.get('/exchange', async (req, res) => {
 
 // GET ACCESS TOKEN
 
-app.get('/dashboard', async (req, res) => {
+app.get('/vehicle', async (req, res) => {
   try {
+    console.log('cookie', req.cookies);
     const { accessToken } = req.cookies.accessCode;
     const { vehicles } = await smartcar.getVehicles(accessToken);
 
@@ -71,10 +68,10 @@ app.get('/dashboard', async (req, res) => {
 
     // get identifying information about a vehicle
     const attributes = await vehicle.attributes();
-    // const odometer = await vehicle.odometer();
-    // const battery = await vehicle.battery();
-    // const vehicleData = { ...odometer, ...attributes, ...battery };
-    return res.status(200).json(attributes);
+    const odometer = await vehicle.odometer();
+    const battery = await vehicle.battery();
+    const vehicleData = { ...odometer, ...attributes, ...battery };
+    return res.status(200).json(vehicleData);
   } catch (err) {
     res.sendStatus(400);
     // return next({

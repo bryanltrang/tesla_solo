@@ -5,17 +5,47 @@ $regular: 400;
 $medium: 500;
 $semi-bold: 600;
 
+$primary-black: #2B2D42;
+$light-grey: #EDF2F4;
+$light-red: #EF233C;
+$primary-red: #D90429;
+
+body {
+    background-color: $light-grey;
+}
 
 h1 {
     font-family: "Jost", "sans-serif";
     font-weight: $semi-bold;
 }
 
+.logo-img {
+    margin-bottom: 16px;
+}
+
+.logo {
+    width: 250px ;
+    margin-bottom: 60px;
+}
+
+.sub-title {
+    margin-bottom: 18px;
+    font-family: "Jost", "sans-serif";
+    font-weight: $regular;
+    color: $primary-black;
+}
+
 .bg {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 500px
+    height: 500px;
+}
+
+.wrapper-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .center-div {
@@ -25,17 +55,36 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.21);
+    z-index: 1;
 }
 
-.login-btn {
+.btn {
     padding: 8px 16px 8px 16px;
     font-family: "Jost", "sans-serif";
-    background-color: maroon;
+    background-color: $primary-red;
     color: white;
     font-weight: 700;
+    font-size: 16px;
     text-decoration: none;
+    border: 1px solid black;
+    transition-duration: .5s;
+    transition-timing-function: ease;
 }
 
 .login-btn:hover {
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.254);
+    box-shadow: 5px 5px 0px rgb(0, 0, 0);
+}
+
+.car-one {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+.car-two {
+    position: absolute;
+    top: 20%;
+    right: 10%;
 }
