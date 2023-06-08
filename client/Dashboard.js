@@ -1,14 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoImage from './assets/logo.svg';
 import YourWheels from './assets/your-WHEELS.svg';
 import CarImage from './assets/model-3.svg';
 
 const Dashboard = ({ info }) => {
+  const [lockMessage, setLockMessage] = useState('');
+  const [tireMessage, setTireMessage] = useState(
+    "Doesn't look like you've changed your tires yet..."
+  );
   const { distance, make, model, range, year, percentRemaining } = info;
   const { requestId } = info.meta;
   const factor = 0.621371;
   const miles = distance * factor;
   const rangeMiles = range * factor;
+
+  // const handleLock = () => {
+  //   fetch('/lock', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ action: 'LOCK' }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setLockMessage('Your car is locked');
+  //     });
+  // };
+
+  // const handleUnlock = () => {
+  //   fetch('/lock', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ action: 'UNLOCK' }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setLockMessage('Your car is unlocked');
+  //     });
+  // };
+
   return (
     <div className="wrapper-div">
       <div className="left-div">
@@ -18,6 +49,7 @@ const Dashboard = ({ info }) => {
         </div>
         <img src={CarImage} className="car-img" />
       </div>
+      {/* Make this into a component */}
       <div className="center-div left">
         <h1>
           {make} {model} ({year})
@@ -30,14 +62,16 @@ const Dashboard = ({ info }) => {
         <div className="odometer-level">
           Odometer: {Math.floor(miles)} miles
         </div>
-        <form>
-          <input
-            className="field"
-            type="text"
-            placeholder="Last tire change?"></input>
-          <button className="btn">Submit</button>
-        </form>
+        {/* LOCK / UNLOCK */}
+        {/* <div>
+          <button onClick={handleLock}>Lock</button>
+          <button onClick={handleUnlock}>Unlock</button>
+          {lockMessage}
+        </div> */}
+        <button className="btn">I changed my tires</button>
+        <p className="sub-title">{tireMessage}</p>
       </div>
+      {/* Make this into a component */}
     </div>
   );
 };

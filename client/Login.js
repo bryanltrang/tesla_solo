@@ -13,7 +13,7 @@ const Login = ({ onClick }) => {
         <img className="logo-img" src={LogoImage}></img>
         <img className="logo" src={Logo}></img>
 
-        <p className="sub-title">Start by connecting your Tesla</p>
+        <p className="sub-title">Start by connecting your Car</p>
 
         <button className="btn" onClick={onClick}>
           Connect

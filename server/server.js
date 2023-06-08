@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-// DO NOT REMOVE OR ELSE IT WILL BREAK
+// DO NOT REMOVE OR ELSE IT WILL BREAK - how can I avoid having to duplicate this in server to make call to
 const client = new smartcar.AuthClient({
   mode: 'test',
   clientId: 'ffcdfc20-0a5f-47a4-b051-7c52543cc333',
@@ -37,14 +37,14 @@ let access;
 // user is redirect to here after auth
 app.get('/exchange', async (req, res) => {
   try {
-    // get code and access code
-    const { code } = req.query;
-    console.log('code', code);
-    access = await client.exchangeCode(code);
-    console.log('access', access);
-    // set cookie here
-    res.cookie('accessCode', access);
-    // old code would redirect here to /vehicle
+    if (!req.cookies.accessCode) {
+      // get code and access code
+      const { code } = req.query;
+      access = await client.exchangeCode(code);
+      console.log('access', access);
+      // set cookie here
+      res.cookie('accessCode', access);
+    }
     return res.sendStatus(200);
   } catch {
     res.sendStatus(400);
@@ -77,6 +77,27 @@ app.get('/vehicle', async (req, res) => {
     // return next({
     //   log: 'Issue found in GET /dashboard endpoint',
     //   message: { err: 'error in GET /dashboard endpoint' },
+    // });
+  }
+});
+
+app.post('/lock', async (req, res) => {
+  try {
+    const { action } = req.body;
+    console.log(req.body);
+    if (!action) res.sendStatus(400);
+    const { accessToken } = req.cookies.accessCode;
+    const { vehicles } = await smartcar.getVehicles(accessToken);
+    const vehicle = new smartcar.Vehicle(vehicles[0], accessToken);
+
+    if (action === 'LOCK') vehicle.lock();
+    if (action === 'UNLOCK') vehicle.unlock();
+    res.sendStatus(200);
+  } catch (err) {
+    res.sendStatus(400);
+    // return next({
+    //   log: 'Issue found in POST /lock endpoint',
+    //   message: { err: 'error in POST /lock endpoint' },
     // });
   }
 });
