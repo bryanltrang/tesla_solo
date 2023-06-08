@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-// DO NOT REMOVE
+// DO NOT REMOVE OR ELSE IT WILL BREAK
 const client = new smartcar.AuthClient({
   mode: 'test',
   clientId: 'ffcdfc20-0a5f-47a4-b051-7c52543cc333',

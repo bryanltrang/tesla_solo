@@ -6,23 +6,29 @@ import CarImage from './assets/model-3.svg';
 const Dashboard = ({ info }) => {
   const { distance, make, model, range, year, percentRemaining } = info;
   const { requestId } = info.meta;
+  const factor = 0.621371;
+  const miles = distance * factor;
+  const rangeMiles = range * factor;
   return (
     <div className="wrapper-div">
       <div className="left-div">
-        <img src={LogoImage} className="logo-img" />
-        <img src={YourWheels} className="logo" />
+        <div className="logo-wrapper">
+          <img src={LogoImage} className="logo-img" />
+          <img src={YourWheels} className="logo your-wheels" />
+        </div>
         <img src={CarImage} className="car-img" />
       </div>
-      <div className="center-div">
+      <div className="center-div left">
         <h1>
           {make} {model} ({year})
         </h1>
         <div className="charge-level">
-          Charge Level {Math.floor(percentRemaining)}% / {range}
+          Charge Level {Math.floor(percentRemaining * 100)}% /
+          {Math.floor(rangeMiles)}
           miles
         </div>
         <div className="odometer-level">
-          Odometer: {Math.floor(distance)} miles
+          Odometer: {Math.floor(miles)} miles
         </div>
         <form>
           <input

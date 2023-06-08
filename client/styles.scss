@@ -28,6 +28,10 @@ h1 {
     margin-bottom: 60px;
 }
 
+.logo.your-wheels {
+    margin-bottom: 16px;
+}
+
 .sub-title {
     margin-bottom: 18px;
     font-family: "Jost", "sans-serif";
@@ -48,6 +52,13 @@ h1 {
     justify-content: center;
 }
 
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .center-div {
     padding: 32px;
     border: 2px solid black;
@@ -58,6 +69,10 @@ h1 {
     background-color: white;
     box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.21);
     z-index: 1;
+}
+
+.center-div.left {
+    align-items: start;
 }
 
 .btn {
@@ -73,7 +88,7 @@ h1 {
     transition-timing-function: ease;
 }
 
-.login-btn:hover {
+.btn:hover {
     box-shadow: 5px 5px 0px rgb(0, 0, 0);
 }
 
@@ -87,4 +102,35 @@ h1 {
     position: absolute;
     top: 20%;
     right: 10%;
+}
+
+.charge-level {
+    margin-bottom: 16px;
+    padding: 8px 16px 8px 16px;
+    background-color:  #277847;
+    font-family: 'Jost';
+    color: white;
+    font-weight: $medium;
+}
+
+.odometer-level {
+    margin-bottom: 24px;
+    padding: 8px 16px 8px 16px;
+    background-color: $primary-black;
+    font-family: 'Jost';
+    color: white;
+    font-weight: $medium;
+}
+
+input {
+    height: 40px;
+    border: 2px solid $primary-black;
+    margin-right: 16px;
+    padding: 8px;
+    font-family: 'Jost';
+    font-weight: $regular;
+}
+
+.car-img {
+    margin-right: -80;
 }
