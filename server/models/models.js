@@ -1,15 +1,27 @@
-const { Pool } = require('pg');
+const mongoose = require('mongoose');
 
-const PG_URI =
-  'postgres://lusomqcn:F0_kFKaUJ0AxjjOEumI36LwmtdanOAy5@rajje.db.elephantsql.com/lusomqcn';
+const MONGO_URI =
+  'mongodb+srv://bryanltrang:73VwgUD6oMwAOjzu@cluster0.nopdg7h.mongodb.net/?retryWrites=true&w=majority';
 
-const pool = new Pool({
-  connectionString: PG_URI,
+mongoose
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'solo_project',
+  })
+  .then(() => console.log('connected to MongoDB'))
+  .catch((err) => {
+    console.log(err);
+  });
+
+const Schema = mongoose.Schema;
+
+const rotationsSchema = new Schema({
+  miles: Number,
+  vehicle_id: String,
+  created_at: String,
 });
 
-module.exports = {
-  query: (text, params, callback) => {
-    console.log('executed query', text);
-    return pool.query(text, params, callback);
-  },
-};
+const Rotations = mongoose.model('rotations', rotationsSchema);
+
+module.exports = { Rotations };

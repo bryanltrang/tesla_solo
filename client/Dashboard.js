@@ -45,6 +45,21 @@ const Dashboard = ({ info }) => {
   // console log response
   const handleAddRotation = () => {
     console.log('Added tire rotation');
+    fetch('/api/tire', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ car: { id: id, odometer: miles } }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        setTireMessage('You added a new record');
+      })
+      .catch((err) => {
+        console.log('Add Tire Rotatioon fetch /api/tire error: ', err);
+      });
   };
 
   return (

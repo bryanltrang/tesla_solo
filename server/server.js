@@ -49,10 +49,6 @@ app.get('/exchange', async (req, res) => {
     return res.sendStatus(200);
   } catch {
     res.sendStatus(400);
-    // return next({
-    //   log: 'Issue found in GET /exchange endpoint',
-    //   message: { err: 'error in GET /exchange endpoint' },
-    // });
   }
 });
 
@@ -75,10 +71,6 @@ app.get('/vehicle', async (req, res) => {
     return res.status(200).json(vehicleData);
   } catch (err) {
     res.sendStatus(400);
-    // return next({
-    //   log: 'Issue found in GET /dashboard endpoint',
-    //   message: { err: 'error in GET /dashboard endpoint' },
-    // });
   }
 });
 
@@ -93,15 +85,15 @@ app.use('*', (req, res) => {
 });
 
 // global error handler
-app.use((error, req, res, next) => {
-  const defaultError = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
-  };
-  const errObj = Object.assign({}, defaultError, error);
-  return res.status(errObj.status).json(errObj.message);
-});
+// app.use((error, req, res, next) => {
+//   const defaultError = {
+//     log: 'Express error handler caught unknown middleware error',
+//     status: 400,
+//     message: { err: 'An error occurred' },
+//   };
+//   const errObj = Object.assign({}, defaultError, error);
+//   return res.status(errObj.status).json(errObj.message);
+// });
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 

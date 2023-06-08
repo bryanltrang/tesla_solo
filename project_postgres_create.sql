@@ -1,7 +1,7 @@
 CREATE TABLE "tire_rotations" (
   "id" serial NOT NULL PRIMARY KEY,
   "miles" integer NOT NULL,
-  "vehicle_id" integer NOT NULL,
+  "vehicle_id" serial NOT NULL,
   "created_at" timestamp NOT NULL
 );
 
