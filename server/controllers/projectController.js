@@ -21,8 +21,17 @@ projectController.addTireRotations = async (req, res, next) => {
 };
 
 // project controller to fetch tire rotations from db
-projectController.getTireRotations = (req, res, next) => {
+projectController.getTireRotations = async (req, res, next) => {
+  const rotations = models.Rotations;
   const { id } = req.query;
+  const foundRotations = await rotations.find({ vehicle_id: id });
+  if (!foundRotations[0]) {
+    return next({
+      log: 'error in GET request for getTireRotations controller',
+      message: { err: 'error in GET request for getTireRotations controller' },
+    });
+  }
+  res.locals.tireRotations = foundRotations;
   return next();
 };
 

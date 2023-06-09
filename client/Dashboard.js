@@ -1,18 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LogoImage from './assets/logo.svg';
 import YourWheels from './assets/your-WHEELS.svg';
 import CarImage from './assets/model-3.svg';
+import moment from 'moment';
 
 const Dashboard = ({ info }) => {
   const [lockMessage, setLockMessage] = useState('');
   const [tireMessage, setTireMessage] = useState(
-    "Doesn't look like you've changed your tires yet..."
+    'Your last 5 tire rotations...'
   );
+  const [tireRecords, setTireRecords] = useState([]);
   const { distance, make, model, range, year, percentRemaining, id } = info;
   const { requestId } = info.meta;
   const factor = 0.621371;
   const miles = distance * factor;
   const rangeMiles = range * factor;
+
+  useEffect(() => {
+    fetch(`/api/tire/?id=${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('fetch rotation data', data);
+        setTireRecords(data);
+      })
+      .catch((err) => console.log(err));
+  }, [tireMessage]);
+
+  const tireElements = [];
+
+  tireRecords.forEach((record) => {
+    const { miles, created_at } = record;
+    tireElements.push(
+      <div className="tire-record">
+        <p>{Math.floor(miles)} miles</p>
+        <p>{moment(created_at).format('MMMM Do YYYY, h:mm:ss a')}</p>
+      </div>
+    );
+  });
+
+  const fiveTireElements = [];
+  for (let i = tireElements.length - 1; i > tireElements.length - 6; i--) {
+    fiveTireElements.push(tireElements[i]);
+  }
 
   // const handleLock = () => {
   //   fetch('/lock', {
@@ -78,8 +107,7 @@ const Dashboard = ({ info }) => {
         </h1>
         <div className="charge-level">
           Charge Level {Math.floor(percentRemaining * 100)}% /
-          {Math.floor(rangeMiles)}
-          miles
+          {Math.floor(rangeMiles)} miles
         </div>
         <div className="odometer-level">
           Odometer: {Math.floor(miles)} miles
@@ -91,9 +119,10 @@ const Dashboard = ({ info }) => {
           {lockMessage}
         </div> */}
         <button className="btn" onClick={handleAddRotation}>
-          I changed my tires
+          I rotated my tires
         </button>
         <p className="sub-title">{tireMessage}</p>
+        {fiveTireElements}
       </div>
       {/* Make this into a component */}
     </div>

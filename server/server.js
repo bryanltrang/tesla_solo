@@ -85,15 +85,15 @@ app.use('*', (req, res) => {
 });
 
 // global error handler
-// app.use((error, req, res, next) => {
-//   const defaultError = {
-//     log: 'Express error handler caught unknown middleware error',
-//     status: 400,
-//     message: { err: 'An error occurred' },
-//   };
-//   const errObj = Object.assign({}, defaultError, error);
-//   return res.status(errObj.status).json(errObj.message);
-// });
+app.use((error, req, res, next) => {
+  const defaultError = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errObj = Object.assign({}, defaultError, error);
+  return res.status(errObj.status).json(errObj.message);
+});
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
